@@ -1,27 +1,16 @@
 use std::fmt::Display;
 
-struct Pair<T> {
-    x: T,
-    y: T,
-}
-
-impl <T> Pair<T> {
-    fn new(x: T, y: T) -> Self {
-        Self {x, y}
-    }
-}
-
-impl <T: Display + PartialOrd> Pair<T> {
-    fn cmp_display(&self) {
-        if self.x >= self.y {
-            println!("kattasi {}", self.x);
-        }else {
-            println!("kattasi {}", self.y)
-        }
-    }
-}
+fn longest_with_an_announcement<'a, T>(x: &'a str, y: &'a str, ann: T,) -> &'a str
+    where
+        T: Display, {
+            println!("Announcement! {ann}");
+            if x.len() > y.len() {
+                x
+            }else {
+                y
+            }
+ }
 
 fn main() {
-    let numbers = Pair::new(5, 9);
-    numbers.cmp_display();
-}//241
+    println!("{}", longest_with_an_announcement("asdf", "zxc", "harfi ko'p so'z"))
+}//257
