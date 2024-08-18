@@ -1,16 +1,18 @@
-use std::fmt::Display;
+use std::{env, process};
 
-fn longest_with_an_announcement<'a, T>(x: &'a str, y: &'a str, ann: T,) -> &'a str
-    where
-        T: Display, {
-            println!("Announcement! {ann}");
-            if x.len() > y.len() {
-                x
-            }else {
-                y
-            }
- }
-
+use my_rust::Config;
 fn main() {
-    println!("{}", longest_with_an_announcement("asdf", "zxc", "harfi ko'p so'z"))
-}//257
+    let args: Vec<String> = env::args().collect();
+    
+    let config = Config::build(&args).unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
+
+    if let Err(e) = my_rust::run(config) {
+        println!("Application error: {e}");
+        process::exit(1);
+    }
+
+}
+
